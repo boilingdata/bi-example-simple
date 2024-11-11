@@ -1,7 +1,18 @@
 -- ----------------------------------------------------------------------
 -- Highlight query and press Ctrl/Cmd + Enter to run query.
 -- ----------------------------------------------------------------------
-SHOW TABLES;
+
+-- 
+-- The database, schema, and table naming are formed like below:
+-- <database>.<schema>.<table>
+-- 
+-- 'database' is formed from 3 parameters 
+--     <sourceType>_<name>_<dbName>
+--  where 
+--     sourceType: dataSource | ingSource
+--     name: data source name
+--     dbName: actual database filename without '.duckdb' ending
+SHOW ALL TABLES;
 
 -- List all DuckDB extensions and their status on local selected DuckDB database.
 -- NOTE: You can set DuckDB init SQL clauses on settings. For example add all INSTALL/LOAD extensions clauses there.

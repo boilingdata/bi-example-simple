@@ -1,5 +1,5 @@
 name: github-test
-dataProfileName: ""
+dataProfileName: github-pr-stats
 sourceType: github.dlt.github
 sources:
   - type: s3
