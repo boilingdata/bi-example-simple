@@ -1,10 +1,10 @@
 {
   "insightsConfig": {
-    "name": "github-pr-close-rate"
+    "name": "asdfasdfasdf"
   },
   "sqlTemplates": [
     {
-      "sql": "WITH pr_metrics AS (      SELECT         DATE_TRUNC('month', created_at) as month,        COUNT(*) as total_prs,        AVG(EXTRACT(EPOCH FROM (closed_at - created_at))/3600)::FLOAT as avg_hours_to_close,        COUNT(CASE WHEN closed = true THEN 1 END) as closed_prs,        COUNT(CASE WHEN closed = false THEN 1 END) as open_prs      FROM dlthub_reactions_20241111084203.pull_requests      WHERE created_at >= DATEADD('month', -6, CURRENT_DATE)      GROUP BY DATE_TRUNC('month', created_at)      ORDER BY month    )    SELECT       month,      total_prs,      avg_hours_to_close,      closed_prs,      open_prs,      (closed_prs::FLOAT / NULLIF(total_prs, 0) * 100)::FLOAT as closure_rate    FROM pr_metrics  "
+      "sql": "WITH pr_metrics AS (             SELECT date_trunc('month', created_at)::DATE as month,                    COUNT(*) as total_prs,                    CAST(AVG(EPOCH_MS (closed_at - created_at) / 3600000.0) AS INTEGER) AS avg_hours_to_close,                    COUNT(                    CASE                              WHEN closed = true THEN 1                    END                    ) as closed_prs,                    COUNT(                    CASE                              WHEN closed = false THEN 1                    END                    ) as open_prs               FROM dlthub_reactions_20241111084203.pull_requests              WHERE created_at >= current_date - INTERVAL '6 months'           GROUP BY date_trunc('month', created_at)           ORDER BY month          )   SELECT month,          total_prs,          avg_hours_to_close,          closed_prs,          open_prs,          CAST(((closed_prs / total_prs) * 100.0) AS INTEGER) AS closure_rate     FROM pr_metrics"
     }
   ],
   "echartsConfig": {
@@ -31,7 +31,7 @@
     "xAxis": [
       {
         "type": "category",
-        "data": "#{month}"
+        "data": []
       }
     ],
     "yAxis": [
@@ -56,7 +56,7 @@
       {
         "name": "Total PRs",
         "type": "bar",
-        "data": "#{total_prs}",
+        "data": [],
         "yAxisIndex": 0,
         "itemStyle": {
           "color": "#5470c6"
@@ -66,7 +66,7 @@
         "name": "Closure Rate (%)",
         "type": "line",
         "smooth": true,
-        "data": "#{closure_rate}",
+        "data": [],
         "yAxisIndex": 1,
         "itemStyle": {
           "color": "#91cc75"
@@ -76,7 +76,7 @@
         "name": "Avg Hours to Close",
         "type": "line",
         "smooth": true,
-        "data": "#{avg_hours_to_close}",
+        "data": [],
         "yAxisIndex": 1,
         "itemStyle": {
           "color": "#ee6666"
