@@ -1,7 +1,8 @@
 {
   "insightsConfig": {
     "name": "Invocations count",
-    "database": "monitoring"
+    "database": "monitoring",
+    "schema": "main"
   },
   "sqlTemplates": [
     {
@@ -11,7 +12,7 @@
   "echartsConfig": {
     "animation": false,
     "toolbox": {
-      "show": true,
+      "show": false,
       "orient": "vertical",
       "left": "right",
       "top": "center",
@@ -22,7 +23,11 @@
         },
         "magicType": {
           "show": true,
-          "type": ["line", "bar", "stack"]
+          "type": [
+            "line",
+            "bar",
+            "stack"
+          ]
         },
         "restore": {
           "show": false

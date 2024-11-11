@@ -13,7 +13,7 @@
   "echartsConfig": {
     "animation": false,
     "toolbox": {
-      "show": true,
+      "show": false,
       "orient": "vertical",
       "left": "right",
       "top": "center",
@@ -27,7 +27,11 @@
         },
         "magicType": {
           "show": true,
-          "type": ["line", "bar", "stack"]
+          "type": [
+            "line",
+            "bar",
+            "stack"
+          ]
         },
         "restore": {
           "show": true
