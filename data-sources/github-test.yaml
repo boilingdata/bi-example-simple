@@ -1,0 +1,11 @@
+name: github-test
+dataProfileName: ""
+sourceType: github.dlt.github
+sources:
+  - type: s3
+    Bucket: boilingdata-demo
+    PrefixTmpl: tmp4/
+    optimisedPrefix: tmp4/optimised
+    derivedPrefix: tmp4/derived
+    region: eu-west-1
+    initialSyncMonths: 1
