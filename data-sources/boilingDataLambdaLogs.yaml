@@ -1,0 +1,10 @@
+name: boilingDataLambdaLogs
+dataProfileName: aws-lambda-json-logs
+sources:
+  - type: s3
+    Bucket: logs.boilingdata.com
+    PrefixTmpl: lambda-logs/lambda-logs/year={{year}}/month={{month}}/day={{day}}/hour={{hour}}
+    optimisedPrefix: lambda-logs/optimised
+    derivedPrefix: lambda-logs/derived
+    region: eu-west-1
+    initialSyncMonths: 1

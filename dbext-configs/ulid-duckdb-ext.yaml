@@ -1,0 +1,4 @@
+extensionName: ulid
+sql: |
+  INSTALL ulid FROM community;
+  LOAD ulid;

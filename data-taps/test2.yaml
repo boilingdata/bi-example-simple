@@ -1,0 +1,5 @@
+id: test2
+s3PrefixTmpl: s3://boilingdata-demo/tmp3/
+dataTapName: testing-own-tap
+authorizedOtherUsers: dforsber@gmail.com
+savedAtTimestamp: 2024-11-11T06:17:00.020Z

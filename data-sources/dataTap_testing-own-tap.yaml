@@ -1,0 +1,11 @@
+name: dataTap_testing-own-tap
+dataProfileName: ""
+sourceType: dataTap.test2
+sources:
+  - type: s3
+    Bucket: boilingdata-demo
+    PrefixTmpl: tmp3/
+    optimisedPrefix: tmp3/optimised
+    derivedPrefix: tmp3/derived
+    region: eu-west-1
+    initialSyncMonths: 1
