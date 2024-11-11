@@ -3,11 +3,12 @@
     "name": "Total volume (uncompressed)",
     "hourly": false,
     "zoomGroupName": "nop",
-    "humanFileSize": true
+    "humanFileSize": true,
+    "database": "monitoring"
   },
   "sqlTemplates": [
     {
-      "sql": "SELECT SUM(bytes) AS value FROM lines WHERE {{{globalWhereFilter}}} AND hour BETWEEN '{{{startHour}}}' AND '{{{endHour}}}';"
+      "sql": "SELECT SUM(bytes) AS value FROM \"{{{database}}}\".\"{{{schema}}}\".lines WHERE {{{globalWhereFilter}}} AND hour BETWEEN '{{{startHour}}}' AND '{{{endHour}}}';"
     }
   ],
   "echartsConfig": {

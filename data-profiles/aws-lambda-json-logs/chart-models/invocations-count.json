@@ -1,10 +1,11 @@
 {
   "insightsConfig": {
-    "name": "Invocations count"
+    "name": "Invocations count",
+    "database": "monitoring"
   },
   "sqlTemplates": [
     {
-      "sql": "SELECT SUM(invocations) AS value, hour FROM invocations WHERE {{{globalWhereFilter}}} AND hour BETWEEN '{{{startHour}}}' AND '{{{endHour}}}' GROUP BY hour ORDER BY hour;"
+      "sql": "SELECT SUM(invocations) AS value, hour FROM \"{{{database}}}\".\"{{{schema}}}\".invocations WHERE {{{globalWhereFilter}}} AND hour BETWEEN '{{{startHour}}}' AND '{{{endHour}}}' GROUP BY hour ORDER BY hour;"
     }
   ],
   "echartsConfig": {
@@ -21,11 +22,7 @@
         },
         "magicType": {
           "show": true,
-          "type": [
-            "line",
-            "bar",
-            "stack"
-          ]
+          "type": ["line", "bar", "stack"]
         },
         "restore": {
           "show": false
