@@ -1,2 +1,5 @@
 default.duckdb
 DATA/
+awsCreds
+ingestion-sources/**/*.duckdb
+ingestion-sources/**/env
