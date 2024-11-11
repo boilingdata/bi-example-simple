@@ -1,0 +1,87 @@
+{
+  "insightsConfig": {
+    "name": "github-pr-close-rate"
+  },
+  "sqlTemplates": [
+    {
+      "sql": "WITH pr_metrics AS (      SELECT         DATE_TRUNC('month', created_at) as month,        COUNT(*) as total_prs,        AVG(EXTRACT(EPOCH FROM (closed_at - created_at))/3600)::FLOAT as avg_hours_to_close,        COUNT(CASE WHEN closed = true THEN 1 END) as closed_prs,        COUNT(CASE WHEN closed = false THEN 1 END) as open_prs      FROM dlthub_reactions_20241111084203.pull_requests      WHERE created_at >= DATEADD('month', -6, CURRENT_DATE)      GROUP BY DATE_TRUNC('month', created_at)      ORDER BY month    )    SELECT       month,      total_prs,      avg_hours_to_close,      closed_prs,      open_prs,      (closed_prs::FLOAT / NULLIF(total_prs, 0) * 100)::FLOAT as closure_rate    FROM pr_metrics  "
+    }
+  ],
+  "echartsConfig": {
+    "tooltip": {
+      "trigger": "axis",
+      "axisPointer": {
+        "type": "shadow"
+      }
+    },
+    "legend": {
+      "data": [
+        "Total PRs",
+        "Closure Rate (%)",
+        "Avg Hours to Close"
+      ],
+      "top": "top"
+    },
+    "grid": {
+      "left": "3%",
+      "right": "4%",
+      "bottom": "3%",
+      "containLabel": true
+    },
+    "xAxis": [
+      {
+        "type": "category",
+        "data": "#{month}"
+      }
+    ],
+    "yAxis": [
+      {
+        "type": "value",
+        "name": "Count",
+        "position": "left",
+        "axisLabel": {
+          "formatter": "{value}"
+        }
+      },
+      {
+        "type": "value",
+        "name": "Rate & Hours",
+        "position": "right",
+        "axisLabel": {
+          "formatter": "{value}"
+        }
+      }
+    ],
+    "series": [
+      {
+        "name": "Total PRs",
+        "type": "bar",
+        "data": "#{total_prs}",
+        "yAxisIndex": 0,
+        "itemStyle": {
+          "color": "#5470c6"
+        }
+      },
+      {
+        "name": "Closure Rate (%)",
+        "type": "line",
+        "smooth": true,
+        "data": "#{closure_rate}",
+        "yAxisIndex": 1,
+        "itemStyle": {
+          "color": "#91cc75"
+        }
+      },
+      {
+        "name": "Avg Hours to Close",
+        "type": "line",
+        "smooth": true,
+        "data": "#{avg_hours_to_close}",
+        "yAxisIndex": 1,
+        "itemStyle": {
+          "color": "#ee6666"
+        }
+      }
+    ]
+  }
+}
