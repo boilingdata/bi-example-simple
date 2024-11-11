@@ -11,7 +11,7 @@
   "echartsConfig": {
     "animation": false,
     "toolbox": {
-      "show": true,
+      "show": false,
       "orient": "vertical",
       "left": "right",
       "top": "center",
