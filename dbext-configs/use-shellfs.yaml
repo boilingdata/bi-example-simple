@@ -1,0 +1,4 @@
+extensionName: shellfs
+sql: |
+  INSTALL shellfs;
+  LOAD shellfs;
