@@ -2,4 +2,4 @@ id: bluesky-new
 s3PrefixTmpl: s3://boilingdata-demo/tmp-bluesky/year=%Y/month=%m/day=%d/hour=%H/%Y-%m-%d_%H_%M_%S_%L_bluesky.parquet
 dataTapName: bluesky-new
 authorizedOtherUsers: ""
-savedAtTimestamp: 2024-11-15T11:58:30.685Z
+savedAtTimestamp: 2024-11-15T12:01:45.929Z
