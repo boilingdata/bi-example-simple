@@ -1,0 +1,11 @@
+name: dataTap_bluesky
+dataProfileName: ""
+sourceType: dataTap.bluesky-stream-data
+sources:
+  - type: s3
+    Bucket: boilingdata-demo
+    PrefixTmpl: tmp-bluesky/year=%Y/month=%m/day=%d/hour=%H/%Y-%m-%d_%H_%M_%S_%L_bluesky.parquet
+    optimisedPrefix: tmp-bluesky/optimised
+    derivedPrefix: tmp-bluesky/derived
+    region: eu-west-1
+    initialSyncMonths: 1
