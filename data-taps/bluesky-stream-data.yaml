@@ -1,0 +1,5 @@
+id: bluesky-stream-data
+s3PrefixTmpl: s3://boilingdata-demo/tmp-bluesky/year=%Y/month=%m/day=%d/hour=%H/%Y-%m-%d_%H_%M_%S_%L_bluesky.parquet
+dataTapName: bluesky
+authorizedOtherUsers: ""
+savedAtTimestamp: 2024-11-15T10:58:00.716Z
