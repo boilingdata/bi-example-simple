@@ -1,10 +1,10 @@
 name: dataTap_bluesky-new
-dataProfileName: ""
+dataProfileName: bluesky-jetstream
 sourceType: dataTap.bluesky-new
 sources:
   - type: s3
     Bucket: boilingdata-demo
-    PrefixTmpl: tmp-bluesky/year={{{year}}}}/month={{{month}}}/day={{{day}}}/hour={{{hour}}}
+    PrefixTmpl: tmp-bluesky/year={{{year}}}/month={{{month}}}/day={{{day}}}/hour={{{hour}}}
     optimisedPrefix: tmp-bluesky/optimised
     derivedPrefix: tmp-bluesky/derived
     region: eu-west-1
