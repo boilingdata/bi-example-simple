@@ -3,3 +3,4 @@ DATA/
 awsCreds
 ingestion-sources/**/*.duckdb
 ingestion-sources/**/env
+ingestion-sources/**/.dlt/secrets.toml

@@ -1,3 +1,0 @@
-sql: |-
-  -- My own SQL setting
-  CREATE OR REPLACE VIEW t42 AS SELECT 42;
