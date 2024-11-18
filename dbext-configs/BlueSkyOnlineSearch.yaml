@@ -2,25 +2,15 @@ extensionName: BlueSky Online Search
 sql: >2
   
     -- 2024-11-18 Extended from:
-
     --   https://gist.github.com/lmangani/518215a68e674ac662537d518799b893
-
     --
-
     -- Example:
-
     --   SELECT * FROM search_posts('qxip.bsky.social') LIMIT 5;
-
     --   SELECT * FROM search_posts('qxip.bsky.social', text := 'quack');
-
     --
-
     -- Convert post_uri column to URL
-
     --   at://<DID>/<COLLECTION>/<RKEY>
-
     --   https://bsky.app/profile/<DID>/post/<RKEY>
-
 
     CREATE OR REPLACE MACRO search_posts(handle, text := '%', max := 25) AS TABLE
 
