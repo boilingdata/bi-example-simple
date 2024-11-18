@@ -1,0 +1,56 @@
+extensionName: BlueSky Online Search
+sql: >2
+  
+    -- 2024-11-18 Extended from:
+
+    --   https://gist.github.com/lmangani/518215a68e674ac662537d518799b893
+
+    --
+
+    -- Example:
+
+    --   SELECT * FROM search_posts('qxip.bsky.social') LIMIT 5;
+
+    --   SELECT * FROM search_posts('qxip.bsky.social', text := 'quack');
+
+    --
+
+    -- Convert post_uri column to URL
+
+    --   at://<DID>/<COLLECTION>/<RKEY>
+
+    --   https://bsky.app/profile/<DID>/post/<RKEY>
+
+
+    CREATE OR REPLACE MACRO search_posts(handle, text := '%', max := 25) AS TABLE
+
+    WITH raw_data AS (
+      SELECT * FROM read_json_auto('https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=' || handle || '&limit=' || max )
+    ),
+
+    unnested_feed AS (
+      SELECT unnest(feed) AS post_data FROM raw_data
+    )
+
+    SELECT
+      -- Post basics
+      post_data.post.author.handle AS author_handle,
+      post_data.post.author.displayName AS display_name,
+
+      -- Post content
+      post_data.post.record.text AS post_text,
+      post_data.post.record.createdAt AS created_at,
+      post_data.post.uri AS post_uri,
+      regexp_replace(post_data.post.uri, '^at://([^/]+)/([^/]+)/(.+)$', 'https://bsky.app/profile/\1/post/\3') as bsky_url,
+
+      -- Engagement metrics
+      post_data.post.replyCount AS replies,
+      post_data.post.repostCount AS reposts,
+      post_data.post.likeCount AS likes,
+      post_data.post.quoteCount AS quotes
+    FROM unnested_feed
+
+    WHERE
+      post_data.post.author.handle LIKE  handle
+      AND post_data.post.record.text LIKE '%' || text || '%'
+    ORDER BY created_at DESC;
