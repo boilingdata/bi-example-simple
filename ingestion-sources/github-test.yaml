@@ -1,7 +1,7 @@
 name: github-test
 type: github
 sourceType: dlt.github
-dir: /Users/dforsber/bi-testing-2/ingestion-sources/github-test
+dir: /Users/dforsber/bi-example-simple/ingestion-sources/github-test
 s3url: s3://boilingdata-demo/tmp4
 dataProfile: ""
 region: ""
