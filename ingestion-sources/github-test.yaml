@@ -1,0 +1,6 @@
+name: github-test
+type: github
+sourceType: dlt.github
+dir: /Users/dforsber/bi-example-simple/ingestion-sources/github-test
+s3url: ""
+region: ""
