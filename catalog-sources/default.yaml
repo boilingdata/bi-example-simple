@@ -1,0 +1,5 @@
+type: glue
+dataCatalogName: default
+dataSourceName: arn:aws:glue:eu-west-1:589434896614:database
+description: "Glue DB: default - arn:aws:glue:eu-west-1:589434896614:database -
+  catalog-source"
