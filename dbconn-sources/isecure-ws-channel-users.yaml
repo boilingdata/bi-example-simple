@@ -1,0 +1,9 @@
+category: account
+name: isecure-ws-channel-users
+description: |-
+  {"column_name":"apikey","column_type":"VARCHAR"}
+  {"column_name":"email","column_type":"VARCHAR"}
+type: dynamodb
+url: ""
+duckDbAttachDbName: "isecure-ws-channel-users"
+database: isecure-ws-channel-users
