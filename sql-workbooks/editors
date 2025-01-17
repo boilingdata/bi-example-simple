@@ -1,0 +1,7 @@
+-- Press Ctrl/Cmd + Enter to run
+SHOW ALL TABLES;
+
+SELECT view_name AS name, schema_name AS schema, 'view' AS type FROM duckdb_views() 
+WHERE schema_name !='information_schema' AND schema_name != 'pg_catalog' AND view_name NOT LIKE 'sqlite%' 
+AND view_name NOT LIKE 'duckdb_%' AND view_name NOT LIKE 'pragma%' 
+UNION ALL SELECT table_name AS name, schema_name AS schema, 'table' AS type from duckdb_tables();
