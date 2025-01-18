@@ -1,11 +1,17 @@
--- 0. Figure out all Iceberg Table versions through all manifest files
+-- 0. Figure out all Iceberg Table versions (through all manifest files)
 FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1);
 SELECT filename, "last-sequence-number" AS seq FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1);
 
--- 1. Iceberg Table version file; it may contain multiple versions
+-- 1. Pick the latest Iceberg Table version
+-- s3://athena-results-dforsber/iceberg_table/metadata/00000-f9488d45-3109-43f3-b373-f2ad2afd1c45.metadata.json
 FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json');
-SELECT snapshots[2]['manifest-list'] AS path FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json')
-SET VARIABLE manifest_list_avro_file = (SELECT snapshots[2]['manifest-list'] AS path FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json'));
+-- NOTE: With these example files, we noticed that the latest metadata.json file also contains the older metadata.json file version
+SELECT snapshots[1]['snapshot-id'] FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00000-f9488d45-3109-43f3-b373-f2ad2afd1c45.metadata.json'); -- older
+SELECT snapshots[1]['snapshot-id'] FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json'); -- newer, but contains the older snapshot too
+-- So, we take the latest metadata.json file and the latest version from it.
+SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json')
+
+SET VARIABLE manifest_list_avro_file = (SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json'));
 SELECT getvariable('manifest_list_avro_file') AS path;
 
 -- 2. snapshot manifest-list Avro file
@@ -19,7 +25,7 @@ SELECT data_file['file_path'] FROM read_avro(getvariable('manifests'));
 
 -- 4. read the table data
 SET VARIABLE data_files = ( SELECT list(data_file['file_path']) AS path FROM read_avro(getvariable('manifests')) );
-
+SELECT COUNT(*) FROM parquet_scan(getvariable('data_files'));
 
 
 
