@@ -1,0 +1,4 @@
+extensionName: avro
+sql: |
+  INSTALL avro FROM community;
+  LOAD avro;
