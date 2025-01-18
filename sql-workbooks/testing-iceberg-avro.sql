@@ -8,7 +8,7 @@ FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee269
 -- NOTE: With these example files, we noticed that the latest metadata.json file also contains the older metadata.json file version
 SELECT snapshots[1]['snapshot-id'] FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00000-f9488d45-3109-43f3-b373-f2ad2afd1c45.metadata.json'); -- older
 SELECT snapshots[1]['snapshot-id'] FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json'); -- newer, but contains the older snapshot too
--- So, we take the latest metadata.json file and the latest version from it.
+-- We take the latest metadata.json file and the latest version from it.
 SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json')
 
 SET VARIABLE manifest_list_avro_file = (SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00001-7ee2692b-2afe-4551-b11d-ffcae35c519e.metadata.json'));
