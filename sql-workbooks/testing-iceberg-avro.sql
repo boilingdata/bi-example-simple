@@ -1,3 +1,6 @@
+INSTALL avro FROM community;
+LOAD avro;
+
 -- 0. Figure out all Iceberg Table versions (through all manifest files)
 FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1);
 SELECT filename, "last-sequence-number" AS seq FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1);
@@ -8,7 +11,7 @@ SELECT getvariable('metadata_json_path') AS metadata_json_path;
 -- 1. Pick the latest Iceberg Table version
 -- s3://athena-results-dforsber/iceberg_table/metadata/00000-f9488d45-3109-43f3-b373-f2ad2afd1c45.metadata.json
 FROM read_json(getvariable('metadata_json_path'));
--- NOTE: With these example files, we noticed that the latest metadata.json file also contains the older metadata.json file version
+-- NOTE: With these example files, we noticed that the latest metadata.json file also contains the older metadata.json table version
 SELECT snapshots[1]['snapshot-id'] FROM read_json('s3://athena-results-dforsber/iceberg_table/metadata/00000-f9488d45-3109-43f3-b373-f2ad2afd1c45.metadata.json'); -- older
 SELECT snapshots[1]['snapshot-id'] FROM read_json(getvariable('metadata_json_path')); -- newer, but contains the older snapshot too
 -- We take the latest metadata.json file and the latest version from it.
@@ -30,11 +33,3 @@ SET VARIABLE data_files = ( SELECT list(data_file['file_path']) AS path FROM rea
 
 -- 4. read the table data (latest version 2)
 SELECT COUNT(*) FROM parquet_scan(getvariable('data_files'));
-
-
-
---
---
-SELECT * FROM read_avro('s3://athena-results-dforsber/iceberg_table/metadata/ffe5b608-5643-4c41-a25d-e1c686d50a05-m0.avro');
-SELECT data_file FROM read_avro('s3://athena-results-dforsber/iceberg_table/metadata/ffe5b608-5643-4c41-a25d-e1c686d50a05-m0.avro');
-SELECT data_file['file_path'] FROM read_avro('s3://athena-results-dforsber/iceberg_table/metadata/ffe5b608-5643-4c41-a25d-e1c686d50a05-m0.avro');
