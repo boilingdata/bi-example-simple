@@ -6,7 +6,7 @@ SET VARIABLE metadata_json_path = ( SELECT filename FROM read_json_auto('s3://at
 -- 1. Pick the latest Iceberg Table version
 SET VARIABLE manifest_list_avro_file = (SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json(getvariable('metadata_json_path')));
 -- 2. snapshot manifest-list Avro file
-SET VARIABLE manifests = ( SELECT list(manifest_path) AS path FROM read_avro(getvariable('manifest_list')));
+SET VARIABLE manifests = ( SELECT list(manifest_path) AS path FROM read_avro(getvariable('manifest_list_avro_file')));
 -- 3. the actual manifest Avro file
 SET VARIABLE data_files = ( SELECT list(data_file['file_path']) AS path FROM read_avro(getvariable('manifests')) );
 -- 4. read the table data (latest version 2)
