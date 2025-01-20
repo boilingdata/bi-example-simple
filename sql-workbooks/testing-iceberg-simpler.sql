@@ -2,7 +2,8 @@ INSTALL avro FROM community;
 LOAD avro;
 
 -- 0. Figure out all Iceberg Table versions (through all manifest files)
-SET VARIABLE metadata_json_path = ( SELECT filename FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC LIMIT 1 );
+SET VARIABLE num_of_versions = ( SELECT "last-sequence-number" AS version FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC LIMIT 1 );
+SET VARIABLE metadata_json_path = ( SELECT "last-sequence-number" AS version, filename FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC LIMIT 1 );
 -- 1. Pick the latest Iceberg Table version
 SET VARIABLE manifest_list_avro_file = (SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json(getvariable('metadata_json_path')));
 -- 2. snapshot manifest-list Avro file
