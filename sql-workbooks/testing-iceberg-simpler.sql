@@ -5,8 +5,8 @@ LOAD avro;
 SET VARIABLE num_of_versions = ( SELECT "last-sequence-number" AS version FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC LIMIT 1 );
 SELECT getvariable('num_of_versions');
 
-SET VARIABLE metadata_json_path_latest = ( SELECT "last-sequence-number" AS version, filename FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC LIMIT 1 );
-SET VARIABLE metadata_json_path_previous = ( SELECT "last-sequence-number" AS version, filename FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC OFFSET 1 LIMIT 1 );
+SET VARIABLE metadata_json_path_latest = ( SELECT filename FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC LIMIT 1 );
+SET VARIABLE metadata_json_path_previous = ( SELECT filename FROM read_json_auto('s3://athena-results-dforsber/iceberg_table/metadata/*.json', filename=1) ORDER BY "last-sequence-number" DESC OFFSET 1 LIMIT 1 );
 -- 1. Pick the latest Iceberg Table version
 SET VARIABLE manifest_list_avro_file = (SELECT snapshots[len(snapshots)]['manifest-list'] AS path FROM read_json(getvariable('metadata_json_path')));
 -- 2. snapshot manifest-list Avro file
