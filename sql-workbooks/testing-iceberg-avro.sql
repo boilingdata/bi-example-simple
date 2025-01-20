@@ -23,8 +23,8 @@ SELECT getvariable('manifest_list_avro_file') AS path;
 
 -- 2. snapshot manifest-list Avro file
 FROM read_avro(getvariable('manifest_list_avro_file'));
-SELECT list(manifest_path) AS path FROM read_avro(getvariable('manifest_list'));
-SET VARIABLE manifests = ( SELECT list(manifest_path) AS path FROM read_avro(getvariable('manifest_list')));
+SELECT list(manifest_path) AS path FROM read_avro(getvariable('manifest_list_avro_file'));
+SET VARIABLE manifests = ( SELECT list(manifest_path) AS path FROM read_avro(getvariable('manifest_list_avro_file')));
 
 -- 3. the actual manifest Avro file
 FROM read_avro(getvariable('manifests'));
