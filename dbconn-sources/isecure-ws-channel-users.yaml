@@ -5,5 +5,5 @@ description: |-
   {"column_name":"email","column_type":"VARCHAR"}
 type: dynamodb
 url: ""
-duckDbAttachDbName: "isecure-ws-channel-users"
+duckDbAttachDbName: "ws_channel_users"
 database: isecure-ws-channel-users

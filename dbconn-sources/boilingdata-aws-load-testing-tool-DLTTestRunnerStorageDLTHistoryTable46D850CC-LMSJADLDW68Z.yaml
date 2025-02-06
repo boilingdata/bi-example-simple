@@ -1,9 +1,0 @@
-category: account
-name: boilingdata-aws-load-testing-tool-DLTTestRunnerStorageDLTHistoryTable46D850CC-LMSJADLDW68Z
-description: |-
-  {"column_name":"testId","column_type":"VARCHAR"}
-  {"column_name":"testRunId","column_type":"VARCHAR"}
-type: dynamodb
-url: ""
-duckDbAttachDbName: "aws_load_testing"
-database: boilingdata-aws-load-testing-tool-DLTTestRunnerStorageDLTHistoryTable46D850CC-LMSJADLDW68Z

@@ -1,0 +1,13 @@
+name: snowflake test connection
+category: local
+type: snowflake
+url: 
+duckDbAttachDbName: snowflake_sample
+host:
+port:
+database: SNOWFLAKE_SAMPLE_DATA
+username: dforsber
+password: 7h8js=nZaMBX
+account: vpxxthi-hi99595 # Snowflake specific
+warehouse: COMPUTE_WH    # Snowflake specific
+role: ACCOUNTADMIN       # Snowflake specific
